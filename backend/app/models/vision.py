@@ -19,3 +19,8 @@ class ValidationError(BaseModel):
     """
     error: str
     detail: Optional[str] = None
+
+class AskResponse(BaseModel):
+    success: bool
+    question: str
+    answer: str
