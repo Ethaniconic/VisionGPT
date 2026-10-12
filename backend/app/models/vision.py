@@ -24,3 +24,13 @@ class AskResponse(BaseModel):
     success: bool
     question: str
     answer: str
+
+class OCRBlock(BaseModel):
+    text: str
+    confidence: float
+
+class OCRResponse(BaseModel):
+    success: bool
+    full_text: str
+    blocks_count: int
+    blocks: list[OCRBlock]

@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { uploadImage } from "../services/api";
 
-const ImageUploader = () => {
+const ImageUploader = ({ onFileSelect }) => {
   const [status, setStatus] = useState("Idle");
   const [result, setResult] = useState(null);
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
+
+    if (onFileSelect) onFileSelect(file);
 
     if (!file.type.startsWith('image/')) {
       setStatus("Error: Not an image file.");

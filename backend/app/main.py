@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
 from app.api import health, vision
 from app.services.model_manager import model_manager
+from app.services.ocr_service import ocr_service
+from app.api import ocr
 
 import logging
 
@@ -28,13 +30,15 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(vision.router)
+app.include_router(ocr.router)
 
 @app.on_event("startup")
 async def startup_event():
     print(f"{settings.APP_NAME} started successfully")
     try:
         model_manager.load_models()
-        logging.info(f"Models loaded successfully")
+        ocr_service.load_engine()
+        logging.info(f"All engines ready...")
     except Exception as e:
         logging.error(f"Failed to load models: {e}")
 
